@@ -1,5 +1,196 @@
-<!doctype html><html lang="pt-BR"><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://kpxztiyrhrmxukupualo.supabase.co; base-uri 'none'; object-src 'none'; form-action 'self'; upgrade-insecure-requests"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#039b54"><meta name="description" content="Agenda da equipe Conecty. Organize reuniões, horários e atendimentos."><title>Conecty | Agenda de reuniões</title><link rel="icon" href="favicon.svg"><link rel="stylesheet" href="assets/style-09f6f4f6bc67.css"></head><body class="conecty-agenda agenda-portal">
-<a class="skip-link" href="#agenda-root">Ir para a agenda</a>
-<header class="agenda-shell-header"><a href="./" aria-label="Conecty Agenda"><img src="conecty-logo.png" alt="Conecty Gestão"></a><span class="agenda-shell-product">AGENDA DE REUNIÕES</span><div id="agenda-account" hidden><span id="agenda-account-name"></span><button class="button secondary" id="agenda-signout" type="button">Sair</button></div></header>
-<main id="agenda-login" class="agenda-login"><section class="agenda-login-intro"><p class="page-eyebrow">CADA CONVERSA, UM NOVO CAMINHO</p><h1>Tempo para<br>conectar<span>.</span></h1><p>Reúna sua equipe e seus clientes.<br>Uma agenda feita para a Conecty.</p><div class="agenda-login-tags"><span>Horários organizados</span><span>Online e presencial</span><span>Google Agenda</span></div></section><section class="agenda-login-card"><div id="agenda-login-loading" role="status">Verificando seu acesso…</div><div id="agenda-login-fields" hidden><p class="page-eyebrow">ACESSO DA EQUIPE</p><h2>Entre na sua agenda.</h2><p>Use sua conta da equipe Conecty.</p><form id="agenda-login-form"><label>E-mail<input type="email" name="email" autocomplete="username" placeholder="seuemail@empresa.com.br" required maxlength="254"></label><label>Senha<span class="agenda-password-wrap"><input type="password" name="password" autocomplete="current-password" placeholder="Digite sua senha" required maxlength="128"><button type="button" id="agenda-password-toggle" aria-label="Mostrar senha" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></label><label class="agenda-remember"><input type="checkbox" name="remember">Manter conectado</label><button class="button primary" type="submit">Acessar agenda <span aria-hidden="true">→</span></button><p class="error" id="agenda-login-error" role="alert"></p></form><p class="agenda-login-contact">Precisa de acesso? Fale com o responsável pela equipe Conecty.</p></div></section></main>
-<main id="agenda-root" class="agenda-standalone-root" hidden tabindex="-1"></main><footer class="agenda-shell-footer">Conecty Gestão · Mais tempo para o que importa.</footer><script src="config.js" defer></script><script src="assets/auth-25ea1a0fbe43.js" defer></script><script src="assets/api-07906e6e6ac9.js" defer></script><script src="assets/categories-ccd5347a908f.js" defer></script><script src="assets/weekly-54b3ec96150f.js" defer></script><script src="assets/admin-971d3200a95f.js" defer></script><script src="assets/portal-99149fe83b92.js" defer></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conecty | Agenda de reuniões</title>
+<meta name="description" content="Agenda da equipe Conecty. Escolha um horário e agende sua reunião.">
+<meta name="theme-color" content="#039b54">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#039b54;--gd:#027a43;--ink:#0d2a1d;--mint:#e8f6ee;--line:#d3e6da;--mut:#5b7266;--bg:#f6fbf8;--err:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font:400 16px/1.55 Poppins,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--gd)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+header{background:var(--g);color:#fff;padding:28px 20px 56px}
+.wrap{max-width:980px;margin:0 auto}
+header img{height:44px;display:block;margin-bottom:28px;background:#fff;border-radius:10px;padding:6px 10px}
+h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.08;margin:0 0 10px;font-weight:700;letter-spacing:-.02em}
+header p{margin:0;max-width:46ch;opacity:.92}
+main{margin-top:-30px;padding:0 20px 40px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:18px}
+h2{font-size:1.15rem;margin:0 0 14px;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px;font:500 .95rem Poppins,sans-serif;color:var(--ink);cursor:pointer;min-width:64px}
+.chip small{display:block;color:var(--mut);font-weight:400;font-size:.75rem}
+.chip[aria-pressed=true]{background:var(--g);border-color:var(--g);color:#fff}
+.chip[aria-pressed=true] small{color:#d6f3e3}
+.chip:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+label{display:block;font-weight:500;font-size:.9rem;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+.btn{background:var(--g);color:#fff;border:0;border-radius:12px;padding:12px 22px;font:600 1rem Poppins,sans-serif;cursor:pointer;margin-top:18px}
+.btn:hover{background:var(--gd)}
+.btn.ghost{background:var(--mint);color:var(--gd)}
+.btn.sm{padding:6px 12px;font-size:.85rem;margin:0}
+.msg{margin-top:12px;font-size:.92rem;color:var(--err)}
+.ok{border-left:6px solid var(--g)}
+.muted{color:var(--mut);font-size:.9rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--mut)}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+footer{text-align:center;padding:10px 20px 40px;color:var(--mut);font-size:.88rem}
+.hide{display:none}
+.days label{display:inline-flex;align-items:center;gap:6px;margin:4px 12px 4px 0;font-weight:400}
+.days input{width:auto}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <img src="conecty-logo.png" alt="Conecty Gestão">
+  <h1>Tempo para conectar.</h1>
+  <p>Escolha um dia e um horário para conversar com a equipe da Conecty, online ou presencial.</p>
+</div></header>
+
+<main><div class="wrap">
+
+<section id="pub">
+  <div class="card"><h2>1. Escolha o dia</h2><div class="row" id="days"></div></div>
+  <div class="card"><h2>2. Escolha o horário</h2><div class="row" id="slots"><span class="muted">Selecione um dia primeiro.</span></div></div>
+  <form class="card" id="form" novalidate>
+    <h2>3. Seus dados</h2>
+    <div class="grid2">
+      <div><label for="n">Nome</label><input id="n" autocomplete="name" required></div>
+      <div><label for="e">E-mail</label><input id="e" type="email" autocomplete="email" required></div>
+      <div><label for="t">Telefone / WhatsApp</label><input id="t" type="tel" autocomplete="tel" required></div>
+      <div><label for="m">Formato</label><select id="m"><option>Online</option><option>Presencial</option></select></div>
+    </div>
+    <label for="a">Assunto da reunião</label><textarea id="a" rows="3"></textarea>
+    <div class="msg" id="err" role="alert"></div>
+    <button class="btn" type="submit">Confirmar agendamento</button>
+  </form>
+  <div class="card ok hide" id="done" tabindex="-1"></div>
+</section>
+
+<section id="adm" class="hide">
+  <div class="card" id="login">
+    <h2>Acesso da equipe</h2>
+    <form id="lf" novalidate>
+      <label for="lu">Usuário</label><input id="lu" autocomplete="username">
+      <label for="lp">Senha</label><input id="lp" type="password" autocomplete="current-password">
+      <div class="msg" id="lerr" role="alert"></div>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+  </div>
+  <div id="panel" class="hide">
+    <div class="tabs">
+      <button class="btn sm" data-tab="reun">Reuniões</button>
+      <button class="btn sm ghost" data-tab="hor">Horários</button>
+      <button class="btn sm ghost" id="out">Sair</button>
+    </div>
+    <div class="card" id="reun"></div>
+    <div class="card hide" id="hor"></div>
+  </div>
+</section>
+
+</div></main>
+<footer>Conecty Gestão · Mais tempo para o que importa. · <a href="#equipe" id="lnk">Área da equipe</a></footer>
+
+<script>
+const USER='admin', HASH='d0cee9744f1224e9220116e1819d760c5943eba5061f025af1aecad85e9d1cd6';
+const $=s=>document.querySelector(s), pad=n=>String(n).padStart(2,'0');
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let cfg=store.get('cg_cfg',{days:[1,2,3,4,5],start:'09:00',end:'17:00',dur:60});
+let bk=store.get('cg_bk',[]);
+let sel={day:null,time:null};
+const WD=['dom','seg','ter','qua','qui','sex','sáb'];
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const br=s=>s.split('-').reverse().join('/');
+
+function allSlots(){const[a,b]=cfg.start.split(':').map(Number),[c,d]=cfg.end.split(':').map(Number),o=[];
+  for(let t=a*60+b;t+cfg.dur<=c*60+d;t+=cfg.dur)o.push(pad(Math.floor(t/60))+':'+pad(t%60));return o}
+function nextDays(){const o=[],b=new Date();b.setHours(0,0,0,0);
+  for(let i=0;o.length<14&&i<60;i++){const x=new Date(b);x.setDate(b.getDate()+i);if(cfg.days.includes(x.getDay()))o.push(x)}return o}
+
+function drawDays(){const el=$('#days');el.innerHTML='';
+  const ds=nextDays();
+  if(!ds.length){el.innerHTML='<span class="muted">Sem datas disponíveis no momento.</span>';return}
+  ds.forEach(d=>{const b=document.createElement('button');b.type='button';b.className='chip';
+    b.setAttribute('aria-pressed',sel.day===iso(d));
+    b.innerHTML=pad(d.getDate())+'/'+pad(d.getMonth()+1)+'<small>'+WD[d.getDay()]+'</small>';
+    b.onclick=()=>{sel.day=iso(d);sel.time=null;drawDays();drawSlots()};el.appendChild(b)})}
+function drawSlots(){const el=$('#slots');el.innerHTML='';
+  if(!sel.day){el.innerHTML='<span class="muted">Selecione um dia primeiro.</span>';return}
+  const now=new Date(),today=iso(now),hm=pad(now.getHours())+':'+pad(now.getMinutes());
+  const ss=allSlots();let free=0;
+  ss.forEach(t=>{const taken=bk.some(x=>x.date===sel.day&&x.time===t),past=sel.day===today&&t<=hm;
+    const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;
+    b.disabled=taken||past;if(!b.disabled)free++;
+    b.setAttribute('aria-pressed',sel.time===t);
+    b.onclick=()=>{sel.time=t;drawSlots()};el.appendChild(b)});
+  if(!free)el.insertAdjacentHTML('beforeend','<span class="muted">Dia lotado. Escolha outra data.</span>')}
+
+$('#form').addEventListener('submit',e=>{e.preventDefault();const err=$('#err');err.textContent='';
+  const n=$('#n').value.trim(),em=$('#e').value.trim(),t=$('#t').value.trim();
+  if(!sel.day||!sel.time){err.textContent='Escolha o dia e o horário antes de confirmar.';return}
+  if(!n||!t||!/^\S+@\S+\.\S+$/.test(em)){err.textContent='Preencha nome, e-mail válido e telefone.';return}
+  if(bk.some(x=>x.date===sel.day&&x.time===sel.time)){err.textContent='Esse horário acabou de ser ocupado. Escolha outro.';drawSlots();return}
+  const r={id:Date.now(),date:sel.day,time:sel.time,name:n,email:em,phone:t,mode:$('#m').value,topic:$('#a').value.trim()};
+  bk.push(r);store.set('cg_bk',bk);
+  const st=r.date.replace(/-/g,'')+'T'+r.time.replace(':','')+'00';
+  const[h,m]=r.time.split(':').map(Number),f=h*60+m+cfg.dur,
+    en=r.date.replace(/-/g,'')+'T'+pad(Math.floor(f/60))+pad(f%60)+'00';
+  const gc='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Reunião Conecty Gestão')+
+    '&dates='+st+'/'+en+'&details='+encodeURIComponent(r.mode+(r.topic?' · '+r.topic:''));
+  const d=$('#done');d.classList.remove('hide');
+  d.innerHTML='<h2>Agendamento confirmado</h2><p>'+esc(r.name)+', sua reunião <strong>'+esc(r.mode.toLowerCase())+'</strong> está marcada para <strong>'+br(r.date)+' às '+r.time+'</strong>.</p><a class="btn" style="display:inline-block;text-decoration:none" target="_blank" rel="noopener" href="'+gc+'">Adicionar ao Google Agenda</a>';
+  $('#form').reset();sel.time=null;drawSlots();d.focus()});
+
+/* ---- Área da equipe ---- */
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const authed=()=>sessionStorage.getItem('cg_auth')==='1';
+$('#lf').addEventListener('submit',async e=>{e.preventDefault();
+  const ok=$('#lu').value.trim()===USER&&await sha($('#lp').value)===HASH;
+  if(ok){sessionStorage.setItem('cg_auth','1');$('#lp').value='';route()}
+  else $('#lerr').textContent='Usuário ou senha incorretos.'});
+$('#out').onclick=()=>{sessionStorage.removeItem('cg_auth');route()};
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+  $('#reun').classList.toggle('hide',b.dataset.tab!=='reun');$('#hor').classList.toggle('hide',b.dataset.tab!=='hor')});
+
+function drawAdmin(){
+  const L=[...bk].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  $('#reun').innerHTML='<h2>Reuniões agendadas ('+L.length+')</h2>'+(L.length?
+    '<div style="overflow-x:auto"><table><tr><th>Data</th><th>Cliente</th><th>Contato</th><th>Formato</th><th></th></tr>'+
+    L.map(r=>'<tr><td>'+br(r.date)+'<br>'+r.time+'</td><td>'+esc(r.name)+(r.topic?'<br><span class="muted">'+esc(r.topic)+'</span>':'')+
+    '</td><td>'+esc(r.email)+'<br>'+esc(r.phone)+'</td><td>'+esc(r.mode)+'</td><td><button class="btn sm ghost" data-del="'+r.id+'">Cancelar</button></td></tr>').join('')+'</table></div>'
+    :'<p class="muted">Nenhuma reunião ainda. Quando um cliente agendar, ela aparece aqui.</p>');
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(!confirm('Cancelar esta reunião?'))return;bk=bk.filter(x=>String(x.id)!==b.dataset.del);store.set('cg_bk',bk);drawAdmin();drawDays();drawSlots()});
+  $('#hor').innerHTML='<h2>Horários de atendimento</h2><form id="cf"><div class="days">'+
+    [1,2,3,4,5,6,0].map(i=>'<label><input type="checkbox" value="'+i+'"'+(cfg.days.includes(i)?' checked':'')+'>'+WD[i]+'</label>').join('')+
+    '</div><div class="grid2"><div><label for="s1">Início</label><input id="s1" type="time" value="'+cfg.start+'"></div>'+
+    '<div><label for="s2">Fim</label><input id="s2" type="time" value="'+cfg.end+'"></div>'+
+    '<div><label for="s3">Duração da reunião</label><select id="s3">'+[30,45,60,90].map(v=>'<option value="'+v+'"'+(cfg.dur===v?' selected':'')+'>'+v+' min</option>').join('')+'</select></div></div>'+
+    '<div class="msg" id="cm" style="color:var(--gd)"></div><button class="btn" type="submit">Salvar horários</button></form>';
+  $('#cf').onsubmit=e=>{e.preventDefault();
+    const ds=[...document.querySelectorAll('.days input:checked')].map(i=>+i.value);
+    if(!ds.length||$('#s1').value>=$('#s2').value){$('#cm').style.color='var(--err)';$('#cm').textContent='Marque ao menos um dia e use um fim depois do início.';return}
+    cfg={days:ds,start:$('#s1').value,end:$('#s2').value,dur:+$('#s3').value};store.set('cg_cfg',cfg);
+    $('#cm').style.color='var(--gd)';$('#cm').textContent='Horários salvos.';sel={day:null,time:null};drawDays();drawSlots()}}
+
+function route(){const adm=location.hash==='#equipe';
+  $('#pub').classList.toggle('hide',adm);$('#adm').classList.toggle('hide',!adm);
+  $('#login').classList.toggle('hide',authed());$('#panel').classList.toggle('hide',!authed());
+  $('#lnk').textContent=adm?'Voltar à agenda':'Área da equipe';$('#lnk').href=adm?'#':'#equipe';
+  if(adm&&authed())drawAdmin()}
+window.addEventListener('hashchange',route);
+drawDays();drawSlots();route();
+</script>
+</body>
+</html>
